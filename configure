@@ -394,6 +394,11 @@ parser.add_option('--enable-static',
     dest='enable_static',
     help='build as static library')
 
+parser.add_option('--enable-shared',
+    action='store_true',
+    dest='enable_shared',
+    help='build as shared library')
+    
 parser.add_option('--no-browser-globals',
     action='store_true',
     dest='no_browser_globals',
@@ -791,6 +796,9 @@ def configure_node(o):
 
   if options.enable_static:
     o['variables']['node_target_type'] = 'static_library'
+  
+  if options.enable_shared:
+    o['variables']['node_target_type'] = 'shared_library'
 
   o['variables']['node_no_browser_globals'] = b(options.no_browser_globals)
 

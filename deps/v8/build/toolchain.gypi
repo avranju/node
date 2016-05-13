@@ -1105,9 +1105,9 @@
             'Optimization': '0',
             'conditions': [
               ['component=="shared_library"', {
-                'RuntimeLibrary': '3',  # /MDd
+                'RuntimeLibrary': '3',  # dll debug
               }, {
-                'RuntimeLibrary': '1',  # /MTd
+                'RuntimeLibrary': '2',  # dll release
               }],
             ],
           },
@@ -1157,9 +1157,9 @@
             'BasicRuntimeChecks': '0',
             'conditions': [
               ['component=="shared_library"', {
-                'RuntimeLibrary': '3',  #/MDd
+                'RuntimeLibrary': '3',  # dll debug
               }, {
-                'RuntimeLibrary': '1',  #/MTd
+                'RuntimeLibrary': '2',  # dll release
               }],
             ],
           },
@@ -1347,9 +1347,9 @@
                 'StringPooling': 'true',
                 'conditions': [
                   ['component=="shared_library"', {
-                    'RuntimeLibrary': '2',  #/MD
+                    'RuntimeLibrary': '3',  # dll debug
                   }, {
-                    'RuntimeLibrary': '0',  #/MT
+                    'RuntimeLibrary': '2',  # dll release
                   }],
                 ],
               },

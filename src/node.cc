@@ -4389,7 +4389,11 @@ static void StartNodeInstance(void* arg) {
     {
       SealHandleScope seal(isolate);
       bool more;
+      node::node_loop_func loop_func = instance_data->loop_func();
       do {
+        if(loop_func != NULL) {
+          loop_func(isolate);
+        }
         v8::platform::PumpMessageLoop(default_platform, isolate);
         more = uv_run(env->event_loop(), UV_RUN_ONCE);
 
@@ -4433,7 +4437,7 @@ static void StartNodeInstance(void* arg) {
   delete array_buffer_allocator;
 }
 
-int Start(int argc, char** argv) {
+int Start(int argc, char** argv, node::node_loop_func loop_func) {
   PlatformInit();
 
   CHECK_GT(argc, 0);
@@ -4470,7 +4474,8 @@ int Start(int argc, char** argv) {
                                    const_cast<const char**>(argv),
                                    exec_argc,
                                    exec_argv,
-                                   use_debug_agent);
+                                   use_debug_agent,
+                                   loop_func);
     StartNodeInstance(&instance_data);
     exit_code = instance_data.exit_code();
   }

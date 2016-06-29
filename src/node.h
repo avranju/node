@@ -78,6 +78,7 @@ struct uv_loop_s;
 // Forward-declare these functions now to stop MSVS from becoming
 // terminally confused when it's done in node_internals.h
 namespace node {
+typedef void(*node_loop_func)(v8::Isolate* isolate);
 
 NODE_EXTERN v8::Local<v8::Value> ErrnoException(v8::Isolate* isolate,
                                                 int errorno,
@@ -184,7 +185,7 @@ NODE_EXTERN extern bool enable_fips_crypto;
 NODE_EXTERN extern bool force_fips_crypto;
 #endif
 
-NODE_EXTERN int Start(int argc, char *argv[]);
+NODE_EXTERN int Start(int argc, char *argv[], node_loop_func loop_func = NULL);
 NODE_EXTERN void Init(int* argc,
                       const char** argv,
                       int* exec_argc,

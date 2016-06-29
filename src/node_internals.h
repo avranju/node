@@ -231,7 +231,8 @@ class NodeInstanceData {
                      const char** argv,
                      int exec_argc,
                      const char** exec_argv,
-                     bool use_debug_agent_flag)
+                     bool use_debug_agent_flag,
+                     node::node_loop_func loop_func)
         : node_instance_type_(node_instance_type),
           exit_code_(1),
           event_loop_(event_loop),
@@ -239,8 +240,13 @@ class NodeInstanceData {
           argv_(argv),
           exec_argc_(exec_argc),
           exec_argv_(exec_argv),
-          use_debug_agent_flag_(use_debug_agent_flag) {
+          use_debug_agent_flag_(use_debug_agent_flag),
+          loop_func_(loop_func) {
       CHECK_NE(event_loop_, nullptr);
+    }
+
+    node::node_loop_func loop_func() const {
+        return loop_func_;
     }
 
     uv_loop_t* event_loop() const {
@@ -294,6 +300,7 @@ class NodeInstanceData {
     const int exec_argc_;
     const char** exec_argv_;
     const bool use_debug_agent_flag_;
+    node::node_loop_func loop_func_;
 
     DISALLOW_COPY_AND_ASSIGN(NodeInstanceData);
 };
